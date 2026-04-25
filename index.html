@@ -298,9 +298,117 @@
   display: none;
 }
 
+/* MODAL STYLES */
+.paper-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 24px 16px;
+  backdrop-filter: blur(3px);
+}
+.paper-modal.open { display: flex; align-items: flex-start; justify-content: center; }
+.modal-box {
+  background: var(--paper);
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+  animation: modalSlideIn 0.25s ease;
+  margin: auto;
+}
+.modal-header { padding: 24px 26px 20px; }
+.modal-close {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.3); }
+.modal-body { padding: 24px 26px; }
+.modal-intro {
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.75;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ink-faint);
+  font-style: italic;
+}
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.modal-card {
+  background: var(--paper-warm);
+  border-radius: 8px;
+  padding: 14px;
+  border: 1px solid var(--ink-faint);
+}
+.modal-card-icon { font-size: 20px; margin-bottom: 6px; }
+.modal-card-title { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.modal-card p { font-size: 12px; color: var(--ink-mid); line-height: 1.6; margin: 0; }
+.modal-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ink-faint);
+}
+.modal-cta {
+  display: inline-flex;
+  align-items: center;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.modal-cta:hover { opacity: 0.85; }
+@keyframes modalSlideIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@media (max-width: 700px) {
+  .modal-grid { grid-template-columns: 1fr; }
+  .modal-body, .modal-header { padding: 18px; }
+}
+
 </style>
 <script>
 
+
+function openModal(id) {
+  var m = document.getElementById(id);
+  m.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  var m = document.getElementById(id);
+  m.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.paper-modal.open').forEach(function(m) {
+      m.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  }
+});
 
 function pubFilter(btn) {
   document.querySelectorAll('.pub-filter').forEach(b => b.classList.remove('active'));
@@ -671,78 +779,253 @@ document.addEventListener('DOMContentLoaded', function(){
 
       <div class="section">
         <div class="section-title">Featured Research</div>
+        <p style="font-size:12px; color:var(--ink-light); margin-bottom:16px; font-style:italic;">Click a paper title to explore the research in depth ↓</p>
 
-        <div style="border:1px solid var(--ink-faint); border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <div style="display:flex; flex-direction:column; gap:14px;">
 
-          <!-- Top accent bar -->
-          <div style="height:5px; background:linear-gradient(90deg, #1e3a5f, #2a5298, #3b82f6);"></div>
-
-          <!-- Paper header -->
-          <div style="padding:20px 22px 0;">
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
-              <span style="font-size:11px; background:#fef3c7; color:#92400e; font-weight:500; padding:3px 10px; border-radius:10px; border:1px solid #fcd34d;">🆕 Just Published · 2026</span>
-              <span style="font-size:11px; background:var(--accent-light); color:var(--accent); font-weight:500; padding:3px 10px; border-radius:10px;">Disaster Economics</span>
-              <span style="font-size:11px; background:var(--accent-light); color:var(--accent); font-weight:500; padding:3px 10px; border-radius:10px;">Urban Resilience</span>
-              <span style="font-size:11px; background:var(--accent-light); color:var(--accent); font-weight:500; padding:3px 10px; border-radius:10px;">Sustainable Cities</span>
-            </div>
-            <div style="font-size:16px; font-weight:500; color:var(--ink); line-height:1.45; margin-bottom:8px;">Earthquake Disaster and Economic Impact Assessment towards Sustainable Cities and Communities: Case Study in South Jakarta District, Indonesia</div>
-            <div style="font-size:12px; color:var(--ink-light); margin-bottom:4px;"><strong style="color:var(--ink-mid); font-weight:500;">Eko Agus Prasetio</strong>, Yukni Arifianti, Fitriani Agustin, Prahara Iqbal, Sarah Ismullah, Pandu Adi Minarno, Ikhwanut Taqwa, Ahmad Zulkifli, Nadiefa Hasna Shabiya</div>
-            <div style="font-size:12px; color:var(--ink-light); margin-bottom:16px;">
-              <a href="https://www.sciencedirect.com/science/article/pii/S3051052X26000410" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:500;">ScienceDirect ↗</a>
+          <!-- Paper 1: Earthquake -->
+          <div onclick="openModal('modal-earthquake')" style="border:1px solid var(--ink-faint); border-radius:10px; overflow:hidden; cursor:pointer; transition:box-shadow 0.2s, transform 0.2s;" onmouseover="this.style.boxShadow='0 6px 20px rgba(30,58,95,0.12)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)'">
+            <div style="height:4px; background:linear-gradient(90deg,#1e3a5f,#2a5298,#60a5fa);"></div>
+            <div style="padding:16px 20px; display:flex; gap:16px; align-items:flex-start;">
+              <div style="flex-shrink:0; width:42px; height:42px; background:var(--accent-light); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px;">🌏</div>
+              <div style="flex:1; min-width:0;">
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+                  <span style="font-size:10px; background:#fef3c7; color:#92400e; font-weight:500; padding:2px 8px; border-radius:8px; border:1px solid #fcd34d;">🆕 2026</span>
+                  <span style="font-size:10px; background:var(--accent-light); color:var(--accent); padding:2px 8px; border-radius:8px;">Disaster Economics</span>
+                  <span style="font-size:10px; background:var(--accent-light); color:var(--accent); padding:2px 8px; border-radius:8px;">Urban Resilience</span>
+                </div>
+                <div style="font-size:14px; font-weight:500; color:var(--accent); line-height:1.45; margin-bottom:6px; text-decoration:underline; text-decoration-color:rgba(30,58,95,0.3); text-underline-offset:3px;">Earthquake Disaster and Economic Impact Assessment towards Sustainable Cities and Communities: Case Study in South Jakarta District, Indonesia</div>
+                <div style="font-size:11px; color:var(--ink-light); margin-bottom:4px;"><strong style="color:var(--ink-mid);">Eko Agus Prasetio</strong>, Yukni Arifianti, Fitriani Agustin, Prahara Iqbal, Sarah Ismullah, Pandu Adi Minarno, Ikhwanut Taqwa, Ahmad Zulkifli, Nadiefa Hasna Shabiya</div>
+                <div style="font-size:11px; color:var(--ink-light); font-style:italic;">Sustainable Cities and Society: Advances · Elsevier · April 2026</div>
+              </div>
+              <div style="flex-shrink:0; color:var(--accent); font-size:18px; padding-top:2px;">›</div>
             </div>
           </div>
 
-          <!-- Visual explainer blocks -->
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0; border-top:1px solid var(--ink-faint);">
-
-            <div style="padding:16px 18px; border-right:1px solid var(--ink-faint); border-bottom:1px solid var(--ink-faint);">
-              <div style="font-size:22px; margin-bottom:6px;">🌏</div>
-              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">Why Jakarta?</div>
-              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Indonesia sits on one of the most seismically active zones on Earth. Yet Jakarta — a dense, high-value economic hub — has rarely had its earthquake risk quantified in economic terms. This study fills that gap.</p>
+          <!-- Paper 2: AV Cluster -->
+          <div onclick="openModal('modal-av')" style="border:1px solid var(--ink-faint); border-radius:10px; overflow:hidden; cursor:pointer; transition:box-shadow 0.2s, transform 0.2s;" onmouseover="this.style.boxShadow='0 6px 20px rgba(30,58,95,0.12)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)'">
+            <div style="height:4px; background:linear-gradient(90deg,#854f0b,#d97706,#fbbf24);"></div>
+            <div style="padding:16px 20px; display:flex; gap:16px; align-items:flex-start;">
+              <div style="flex-shrink:0; width:42px; height:42px; background:#faeeda; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px;">🚗</div>
+              <div style="flex:1; min-width:0;">
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+                  <span style="font-size:10px; background:#fef3c7; color:#92400e; font-weight:500; padding:2px 8px; border-radius:8px; border:1px solid #fcd34d;">2025</span>
+                  <span style="font-size:10px; background:#faeeda; color:#854f0b; padding:2px 8px; border-radius:8px;">Autonomous Vehicles</span>
+                  <span style="font-size:10px; background:#faeeda; color:#854f0b; padding:2px 8px; border-radius:8px;">Market Segmentation</span>
+                </div>
+                <div style="font-size:14px; font-weight:500; color:#854f0b; line-height:1.45; margin-bottom:6px; text-decoration:underline; text-decoration-color:rgba(133,79,11,0.3); text-underline-offset:3px;">Cluster Analysis of Potential Autonomous Vehicle (AV) Adopters in Indonesia's New Capital</div>
+                <div style="font-size:11px; color:var(--ink-light); margin-bottom:4px;"><strong style="color:var(--ink-mid);">Eko Agus Prasetio</strong>, Dita Novizayanti, Aghnia Nadhira Aliya Putri</div>
+                <div style="font-size:11px; color:var(--ink-light); font-style:italic;">Transportation Research Interdisciplinary Perspectives · Scopus Q1 · 2025</div>
+              </div>
+              <div style="flex-shrink:0; color:#854f0b; font-size:18px; padding-top:2px;">›</div>
             </div>
-
-            <div style="padding:16px 18px; border-right:1px solid var(--ink-faint); border-bottom:1px solid var(--ink-faint);">
-              <div style="font-size:22px; margin-bottom:6px;">📐</div>
-              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">What Was Measured</div>
-              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Using GIS-based fuzzy logic, seismic ground acceleration data, and business asset valuations across 214 facilities in Kebayoran Baru, the study mapped where earthquake hazard and economic value dangerously overlap.</p>
-            </div>
-
-            <div style="padding:16px 18px; border-bottom:1px solid var(--ink-faint);">
-              <div style="font-size:22px; margin-bottom:6px;">💡</div>
-              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">The Surprising Finding</div>
-              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Finance, IT, legal services, and retail sit in the highest-risk zones — with risk scores up to <strong style="color:var(--ink);">0.704</strong>. Yet digital-first businesses show strong resilience: flexible work and cloud infrastructure limit real damage to temporary access loss.</p>
-            </div>
-
           </div>
 
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0; border-bottom:1px solid var(--ink-faint);">
-
-            <div style="padding:16px 18px; border-right:1px solid var(--ink-faint);">
-              <div style="font-size:22px; margin-bottom:6px;">🏗️</div>
-              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">The Price Tag</div>
-              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Reconstruction cost estimates range from <strong style="color:var(--ink);">IDR 204.7 million to IDR 3.06 billion per building</strong> — giving urban planners and insurers a replicable framework for post-disaster financial planning.</p>
+          <!-- Paper 3: AV Perceived Safety -->
+          <div onclick="openModal('modal-safety')" style="border:1px solid var(--ink-faint); border-radius:10px; overflow:hidden; cursor:pointer; transition:box-shadow 0.2s, transform 0.2s;" onmouseover="this.style.boxShadow='0 6px 20px rgba(30,58,95,0.12)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)'">
+            <div style="height:4px; background:linear-gradient(90deg,#4c1d95,#7c3aed,#a78bfa);"></div>
+            <div style="padding:16px 20px; display:flex; gap:16px; align-items:flex-start;">
+              <div style="flex-shrink:0; width:42px; height:42px; background:#f3e8ff; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px;">🔒</div>
+              <div style="flex:1; min-width:0;">
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+                  <span style="font-size:10px; background:#fef3c7; color:#92400e; font-weight:500; padding:2px 8px; border-radius:8px; border:1px solid #fcd34d;">2023</span>
+                  <span style="font-size:10px; background:#f3e8ff; color:#6d28d9; padding:2px 8px; border-radius:8px;">AV Safety</span>
+                  <span style="font-size:10px; background:#f3e8ff; color:#6d28d9; padding:2px 8px; border-radius:8px;">Cybersecurity</span>
+                </div>
+                <div style="font-size:14px; font-weight:500; color:#6d28d9; line-height:1.45; margin-bottom:6px; text-decoration:underline; text-decoration-color:rgba(109,40,217,0.3); text-underline-offset:3px;">Evaluating Perceived Safety of Autonomous Vehicle: The Influence of Privacy and Cybersecurity to Cognitive and Emotional Safety</div>
+                <div style="font-size:11px; color:var(--ink-light); margin-bottom:4px;"><strong style="color:var(--ink-mid);">Eko Agus Prasetio</strong>, Cintia Nurliyana</div>
+                <div style="font-size:11px; color:var(--ink-light); font-style:italic;">IATSS Research · Scopus Q1 · 2023</div>
+              </div>
+              <div style="flex-shrink:0; color:#6d28d9; font-size:18px; padding-top:2px;">›</div>
             </div>
-
-            <div style="padding:16px 18px; border-right:1px solid var(--ink-faint);">
-              <div style="font-size:22px; margin-bottom:6px;">🗺️</div>
-              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">Who Should Act</div>
-              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">The study bridges science and policy — equipping city planners, disaster managers, and investors with maps, risk indices, and cost models to prioritise mitigation and build a more resilient Jakarta.</p>
-            </div>
-
-            <div style="padding:16px 18px;">
-              <div style="font-size:22px; margin-bottom:6px;">🌱</div>
-              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">Bigger Picture</div>
-              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Beyond Jakarta, this methodology offers a <strong style="color:var(--ink);">replicable blueprint</strong> for any emerging-economy city sitting at the intersection of rapid urban growth and natural hazard exposure.</p>
-            </div>
-
           </div>
 
-          <!-- Bottom CTA -->
-          <div style="padding:14px 22px; background:var(--paper-warm); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-            <div style="font-size:12px; color:var(--ink-light); font-style:italic;">Published in <em>Sustainable Cities and Society: Advances</em> · Elsevier · Available online 23 April 2026</div>
-            <a href="https://www.sciencedirect.com/science/article/pii/S3051052X26000410" target="_blank" style="display:inline-flex; align-items:center; gap:6px; background:var(--accent); color:#fff; font-size:12px; font-weight:500; padding:7px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Read Full Paper ↗</a>
-          </div>
+        </div>
+      </div>
 
+      <!-- MODAL: AV Perceived Safety -->
+      <div id="modal-safety" class="paper-modal" onclick="if(event.target===this)closeModal('modal-safety')">
+        <div class="modal-box">
+          <div class="modal-header" style="background:linear-gradient(135deg,#2e1065,#4c1d95);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+              <div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+                  <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:8px;">🔒 Cybersecurity & Safety</span>
+                  <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:8px;">Autonomous Vehicles</span>
+                  <span style="font-size:11px; background:#fef3c7; color:#92400e; padding:3px 10px; border-radius:8px; font-weight:500;">Scopus Q1 · 2023</span>
+                </div>
+                <h2 style="font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:#fff; line-height:1.4; margin-bottom:8px;">Evaluating Perceived Safety of Autonomous Vehicle: The Influence of Privacy and Cybersecurity to Cognitive and Emotional Safety</h2>
+                <p style="font-size:12px; color:rgba(255,255,255,0.65); margin-bottom:4px;"><strong style="color:rgba(255,255,255,0.9);">Eko Agus Prasetio</strong>, Cintia Nurliyana</p>
+                <p style="font-size:11px; color:rgba(255,255,255,0.5); font-style:italic;">IATSS Research · Elsevier · 47(2), 160–170</p>
+              </div>
+              <button onclick="closeModal('modal-safety')" class="modal-close">✕</button>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="modal-intro">Autonomous vehicles promise safer roads and smoother traffic — but what happens when a self-driving car gets hacked? This study investigates how cybersecurity and privacy concerns shape whether people feel safe enough to actually use AVs, revealing a critical and often overlooked barrier to adoption.</div>
+
+            <div class="modal-grid">
+              <div class="modal-card">
+                <div class="modal-card-icon">🤔</div>
+                <div class="modal-card-title">The Problem</div>
+                <p>AVs are vulnerable to hacking and data exploitation. While safety research often focuses on crash prevention, this study asks a different question: do people <em>feel</em> safe — and what drives that feeling?</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">📋</div>
+                <div class="modal-card-title">The Study Design</div>
+                <p><strong>466 participants</strong> responded to a survey testing a comprehensive perceived safety model. Responses were analysed using <strong>Structural Equation Modelling (SEM)</strong> — capturing both direct and causal relationships between variables.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">🏆</div>
+                <div class="modal-card-title">The #1 Finding</div>
+                <p><strong>Privacy cybersecurity is the most powerful predictor of perceived safety</strong> — outranking both emotional and cognitive safety. If people don't trust that their data is safe, they won't feel safe in an AV, full stop.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">📊</div>
+                <div class="modal-card-title">Who Will Adopt?</div>
+                <p><strong>31.1%</strong> of participants expressed intent to use a Level 2 AV (partial automation), while just <strong>8.8%</strong> were willing to go to Level 5 (full autonomy). Higher autonomy = higher cybersecurity anxiety.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">🧠</div>
+                <div class="modal-card-title">Cognitive vs Emotional Safety</div>
+                <p>The study separates <strong>cognitive safety</strong> (rational assessment of AV reliability) from <strong>emotional safety</strong> (feelings of comfort and reassurance). Cybersecurity concerns damage <em>both</em> — but hit emotional safety hardest.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">🏛️</div>
+                <div class="modal-card-title">Policy Implications</div>
+                <p>For governments, transport agencies, and AV developers: safety messaging alone is insufficient. <strong>Robust data protection standards, transparent privacy policies, and cybersecurity certification</strong> must be front and centre in any AV rollout strategy.</p>
+              </div>
+            </div>
+
+            <div class="modal-footer-bar">
+              <span style="font-size:12px; color:var(--ink-light); font-style:italic;">IATSS Research · Elsevier · Scopus Q1 · 47(2), 160–170 · 2023</span>
+              <a href="https://www.sciencedirect.com/science/article/pii/S0386111223000262" target="_blank" class="modal-cta">Read Full Paper ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="modal-earthquake" class="paper-modal" onclick="if(event.target===this)closeModal('modal-earthquake')">
+        <div class="modal-box">
+          <div class="modal-header" style="background:linear-gradient(135deg,#0f172a,#1e3a5f);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+              <div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+                  <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:8px;">🌏 Disaster Economics</span>
+                  <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:8px;">Urban Resilience</span>
+                  <span style="font-size:11px; background:#fef3c7; color:#92400e; padding:3px 10px; border-radius:8px; font-weight:500;">🆕 April 2026</span>
+                </div>
+                <h2 style="font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:#fff; line-height:1.4; margin-bottom:8px;">Earthquake Disaster and Economic Impact Assessment towards Sustainable Cities and Communities</h2>
+                <p style="font-size:12px; color:rgba(255,255,255,0.65); margin-bottom:4px;"><strong style="color:rgba(255,255,255,0.9);">Eko Agus Prasetio</strong>, Yukni Arifianti, Fitriani Agustin, Prahara Iqbal, Sarah Ismullah, Pandu Adi Minarno, Ikhwanut Taqwa, Ahmad Zulkifli, Nadiefa Hasna Shabiya</p>
+                <p style="font-size:11px; color:rgba(255,255,255,0.5); font-style:italic;">Sustainable Cities and Society: Advances · Elsevier</p>
+              </div>
+              <button onclick="closeModal('modal-earthquake')" class="modal-close">✕</button>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="modal-intro">Indonesia is one of the most seismically active countries on Earth. Yet for Jakarta — a dense urban hub packed with high-value business assets — the economic cost of a major earthquake had never been rigorously mapped. This study closes that gap with a dual-framework approach combining seismic hazard assessment and economic impact modelling.</div>
+
+            <div class="modal-grid">
+              <div class="modal-card">
+                <div class="modal-card-icon">📐</div>
+                <div class="modal-card-title">The Methodology</div>
+                <p>The study integrates Peak Ground Acceleration (PGA) data, GIS-based fuzzy logic, geological conditions, and longitudinal GRDP data across <strong>214 business facilities</strong> in Kebayoran Baru — one of South Jakarta's most commercially dense sub-districts.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">⚠️</div>
+                <div class="modal-card-title">The Risk Overlap</div>
+                <p>High seismic hazard zones directly overlap clusters of high-value assets in <strong>finance, IT, legal services, and retail</strong> — yielding risk index values up to <strong>0.704</strong>. These sectors sit in the most vulnerable locations.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">💡</div>
+                <div class="modal-card-title">The Surprising Finding</div>
+                <p>Despite high risk scores, <strong>service-oriented and digital businesses show strong resilience</strong>. Flexible work models and cloud infrastructure mean disruption is largely limited to temporary access and equipment losses — not catastrophic collapse.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">💰</div>
+                <div class="modal-card-title">The Cost Estimates</div>
+                <p>Reconstruction costs per building range from <strong>IDR 204.7 million to IDR 3.06 billion</strong> — providing a standardised, replicable framework for post-disaster financial planning for insurers, investors, and urban planners.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">🏛️</div>
+                <div class="modal-card-title">Policy Implications</div>
+                <p>The study delivers actionable tools for decision-makers: risk maps to identify high-priority zones, cost models for budgeting, and targeted mitigation strategies — bridging the gap between scientific seismology and urban governance.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">🌱</div>
+                <div class="modal-card-title">Broader Impact</div>
+                <p>The dual ERS–EIS framework offers a <strong>replicable blueprint</strong> for any emerging-economy city at the intersection of rapid urban growth and natural hazard exposure — well beyond Indonesia.</p>
+              </div>
+            </div>
+
+            <div class="modal-footer-bar">
+              <span style="font-size:12px; color:var(--ink-light); font-style:italic;">Sustainable Cities and Society: Advances · Elsevier · Available online 23 April 2026</span>
+              <a href="https://www.sciencedirect.com/science/article/pii/S3051052X26000410" target="_blank" class="modal-cta">Read Full Paper ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: AV Cluster Paper -->
+      <div id="modal-av" class="paper-modal" onclick="if(event.target===this)closeModal('modal-av')">
+        <div class="modal-box">
+          <div class="modal-header" style="background:linear-gradient(135deg,#451a03,#854f0b);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+              <div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+                  <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:8px;">🚗 Autonomous Vehicles</span>
+                  <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:8px;">Market Segmentation</span>
+                  <span style="font-size:11px; background:#fef3c7; color:#92400e; padding:3px 10px; border-radius:8px; font-weight:500;">Scopus Q1 · 2025</span>
+                </div>
+                <h2 style="font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:#fff; line-height:1.4; margin-bottom:8px;">Cluster Analysis of Potential Autonomous Vehicle (AV) Adopters in Indonesia's New Capital</h2>
+                <p style="font-size:12px; color:rgba(255,255,255,0.65); margin-bottom:4px;"><strong style="color:rgba(255,255,255,0.9);">Eko Agus Prasetio</strong>, Dita Novizayanti, Aghnia Nadhira Aliya Putri</p>
+                <p style="font-size:11px; color:rgba(255,255,255,0.5); font-style:italic;">Transportation Research Interdisciplinary Perspectives · Elsevier</p>
+              </div>
+              <button onclick="closeModal('modal-av')" class="modal-close">✕</button>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="modal-intro">Indonesia's major cities are crippled by severe traffic congestion — causing air pollution, lost productivity, higher accident rates, and contributions to global warming. Autonomous Vehicles (AVs) promise to change this. But will Indonesians actually adopt them? This study maps <em>who</em> will adopt AVs first — and what it takes to reach each group.</div>
+
+            <div class="modal-grid">
+              <div class="modal-card">
+                <div class="modal-card-icon">🏙️</div>
+                <div class="modal-card-title">Why Nusantara?</div>
+                <p>Nusantara — Indonesia's new capital city — is uniquely positioned as the first region where AVs will be deployed. Civil servants relocating there form a captive, definable market, making it the ideal testing ground for AV adoption research.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">📊</div>
+                <div class="modal-card-title">The Research Design</div>
+                <p>A survey of <strong>356 participants</strong> addressed 13 factors relevant to AV adoption — from safety perceptions to hedonic motivation. Cluster analysis grouped respondents into four distinct adopter profiles.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">👥</div>
+                <div class="modal-card-title">The Four Clusters</div>
+                <p><strong>Cluster 1 (27%)</strong> — values sustainability & performance but needs trust assurances.<br><strong>Cluster 2 (16%)</strong> — driven by enjoyment & emotional safety, low media influence.<br><strong>Cluster 3 (38%)</strong> — focuses on usefulness & safety, largely ignores media.<br><strong>Cluster 4 (18%)</strong> — values enjoyment & usefulness, least influenced by external factors.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">🎯</div>
+                <div class="modal-card-title">The Strategic Insight</div>
+                <p>No single message works for all adopters. Each cluster has distinct barriers and motivators — requiring <strong>staged, targeted strategies</strong>: build trust first, then enhance positive perceptions, leverage social influence, and finally sustain enthusiasm with incentives.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">🔒</div>
+                <div class="modal-card-title">The Safety Question</div>
+                <p>Across all four clusters, <strong>emotional safety</strong> is the single most consistent driver of adoption intent — more than performance, cost, or sustainability. Any AV rollout strategy must lead with safety communication.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">🌏</div>
+                <div class="modal-card-title">Broader Significance</div>
+                <p>Indonesia's AV adoption dynamics reflect the broader challenge for <strong>emerging economies</strong> introducing frontier mobility technology. The cluster-based framework offers a replicable model for other developing nations planning smart city transitions.</p>
+              </div>
+            </div>
+
+            <div class="modal-footer-bar">
+              <span style="font-size:12px; color:var(--ink-light); font-style:italic;">Transportation Research Interdisciplinary Perspectives · Scopus Q1 · 2025</span>
+              <a href="https://www.sciencedirect.com/science/article/pii/S259019822400304X" target="_blank" class="modal-cta">Read Full Paper ↗</a>
+            </div>
+          </div>
         </div>
       </div>
 
