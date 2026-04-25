@@ -324,6 +324,7 @@ function pubFilter(btn) {
 }
 
 
+document.addEventListener('DOMContentLoaded', function(){
 (function(){
   const canvas = document.getElementById('network-canvas');
   const header = canvas.parentElement;
@@ -382,6 +383,7 @@ function pubFilter(btn) {
   draw();
   window.addEventListener('resize', () => { cancelAnimationFrame(raf); init(); draw(); });
 })();
+});
 
 </script>
 </head></head>
