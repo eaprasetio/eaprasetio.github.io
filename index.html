@@ -219,40 +219,40 @@
     .container { padding: 0 20px; }
     .header-inner { flex-direction: column; gap: 16px; align-items: flex-start; }
     .avatar { width: 80px; height: 96px; }
-    .header-text h1 { font-size: 24px; }
-    .header-text h1 .credentials { font-size: 14px; }
-    .header-text h1 .credentials[style] { font-size: 17px !important; }
-    .header-text .inst { font-size: 13px; }
+    .header-text h1 { font-size: 26px; }
+    .header-text h1 .credentials { font-size: 16px; }
+    .header-text h1 .credentials[style] { font-size: 19px !important; }
+    .header-text .inst { font-size: 14px; }
     .header-links { gap: 8px; }
-    .header-links a { font-size: 11px; padding: 3px 10px; }
+    .header-links a { font-size: 12px; padding: 3px 10px; }
 
     .stats-strip { padding: 16px 0; }
     .stats-inner { flex-wrap: wrap; justify-content: center; }
     .stat { min-width: 90px; flex: 0 0 30%; padding: 8px 10px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); }
     .stat:nth-child(3n) { border-right: none; }
-    .stat-num { font-size: 26px; }
-    .stat-label { font-size: 10px; }
+    .stat-num { font-size: 28px; }
+    .stat-label { font-size: 11px; }
 
     .main { grid-template-columns: 1fr; }
     .content-col { border-right: none; }
     .sidebar-col { border-top: 2px solid var(--ink-faint); }
 
     .section { padding: 24px 20px; }
-    .section-title { font-size: 13px; }
+    .section-title { font-size: 15px; }
     .sidebar-section { padding: 20px 20px; }
-    .sidebar-title { font-size: 11px; }
+    .sidebar-title { font-size: 13px; }
 
-    .pub-title { font-size: 13px; }
-    .pub-meta { font-size: 11px; }
+    .pub-title { font-size: 15px; }
+    .pub-meta { font-size: 13px; }
 
     .areas { gap: 6px; }
-    .area-tag { font-size: 11px; padding: 4px 10px; }
+    .area-tag { font-size: 13px; padding: 4px 10px; }
   }
 
   @media (max-width: 480px) {
-    .header-text h1 { font-size: 20px; line-height: 1.2; }
-    .header-text h1 .credentials { font-size: 13px; }
-    .header-text h1 .credentials[style] { font-size: 15px !important; }
+    .header-text h1 { font-size: 22px; line-height: 1.2; }
+    .header-text h1 .credentials { font-size: 14px; }
+    .header-text h1 .credentials[style] { font-size: 16px !important; }
     .stat { flex: 0 0 45%; }
 
     .section { padding: 20px 16px; }
@@ -260,8 +260,10 @@
 
     .pub { padding: 12px 14px; }
 
-    .contact-item { font-size: 11px; }
-    .contact-label { width: 52px; font-size: 10px; }
+    .contact-item { font-size: 13px; }
+    .contact-label { width: 56px; font-size: 11px; }
+
+    body { font-size: 14px; }
   }
 </style>
 </head>
@@ -547,6 +549,132 @@
         <p style="font-size:14px; color:var(--ink-mid); line-height:1.75;">
           Beyond academia, I maintain extensive engagement with industry and government, advising on Industry 4.0 readiness assessments, EV infrastructure policy, digital talent readiness, and ESG development for major Indonesian corporations and ministries.
         </p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Opinion &amp; Public Writing</div>
+
+        <div style="display:flex; flex-direction:column; gap:16px;">
+
+          <div style="border:1px solid var(--ink-faint); border-radius:10px; overflow:hidden; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 18px rgba(0,0,0,0.08)'" onmouseout="this.style.boxShadow='none'">
+            <div style="background:linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); padding:16px 18px; display:flex; align-items:flex-start; gap:14px;">
+              <div style="flex-shrink:0; width:42px; height:42px; background:rgba(255,255,255,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 6h14M4 10h10M4 14h7" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:14px; font-weight:500; color:#fff; line-height:1.4; margin-bottom:4px;">Ha-Joon Chang dan Kemunafikan Negara Maju</div>
+                <div style="font-size:11px; color:rgba(255,255,255,0.6);">Indonesia, Danantara, dan Jalan Panjang Menuju Industrialisasi yang Mandiri</div>
+              </div>
+            </div>
+            <div style="padding:14px 18px; background:var(--paper-warm);">
+              <div style="font-size:12px; color:var(--ink-light); margin-bottom:10px; display:flex; gap:14px; flex-wrap:wrap;">
+                <span>✍ Eko Agus Prasetio</span>
+                <span>📅 31 Oktober 2025</span>
+                <span>🏛 Dosen SBM-ITB</span>
+              </div>
+              <p style="font-size:13px; color:var(--ink-mid); line-height:1.7; margin-bottom:12px;">
+                Negara-negara maju sering menasihati negara berkembang agar mempercayai pasar bebas. Namun, seperti diungkap Ha-Joon Chang, nasihat itu menyembunyikan paradoks besar: justru proteksionisme dan kebijakan industri yang membuat mereka maju — sebuah fenomena yang disebutnya <em>kicking the ladder</em>. Tulisan ini mengkaji relevansi gagasan Chang bagi Indonesia, terutama dalam konteks de-industrialisasi prematur dan ambisi Danantara sebagai ujian nyata kebijakan industri transformatif.
+              </p>
+              <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+                <span style="font-size:11px; background:var(--accent-light); color:var(--accent); padding:2px 9px; border-radius:10px;">Industrial Policy</span>
+                <span style="font-size:11px; background:var(--accent-light); color:var(--accent); padding:2px 9px; border-radius:10px;">Ha-Joon Chang</span>
+                <span style="font-size:11px; background:var(--accent-light); color:var(--accent); padding:2px 9px; border-radius:10px;">Danantara</span>
+                <span style="font-size:11px; background:var(--accent-light); color:var(--accent); padding:2px 9px; border-radius:10px;">Industrialisasi Indonesia</span>
+                <span style="font-size:11px; background:var(--accent-light); color:var(--accent); padding:2px 9px; border-radius:10px;">Kebijakan Ekonomi</span>
+              </div>
+              <div id="opinion-1-full" style="display:none; border-top:1px solid var(--ink-faint); padding-top:14px; margin-bottom:12px;">
+                <p style="font-size:13px; color:var(--ink-mid); line-height:1.75; margin-bottom:10px;">Chang memberikan data dan analisis historis yang menunjukkan bahwa Indonesia — meski termasuk yang tumbuh cepat sejak 1947 — belum <em>upgraded</em> menjadi negara maju seperti Korea Selatan. Pertumbuhan Indonesia masih sangat bergantung pada komoditas (<em>extractive-based economy</em>), dan porsi industri manufaktur terhadap PDB terus menurun: dari sekitar 28 persen pada awal 2000-an menjadi di bawah 18 persen pada 2023 — sebuah gejala <em>premature de-industrialization</em>.</p>
+                <p style="font-size:13px; color:var(--ink-mid); line-height:1.75; margin-bottom:10px;">Chang menganjurkan <em>transformative industrial policy</em>: dari "getting out of the way" menjadi "helping business succeed", dengan visi jangka panjang, dialog aktif antara pemerintah dan industri, serta pembelajaran dan koreksi berkelanjutan. Namun, <strong style="color:var(--ink); font-weight:500;">Dani Rodrik</strong> mengingatkan bahwa kebijakan semacam ini hanya efektif dalam konteks institusi yang kuat — sesuatu yang masih menjadi tantangan bagi Indonesia.</p>
+                <p style="font-size:13px; color:var(--ink-mid); line-height:1.75;">Dalam konteks ini, <strong style="color:var(--ink); font-weight:500;">Danantara</strong> — lembaga superholding investasi negara — menjadi ujian besar. Jika dikelola dengan tata kelola yang kuat, transparan, dan visi jangka panjang, ia bisa menjadi contoh nyata dari <em>transformative industrial policy</em>. Tanpa institusi yang tangguh, ia mudah tergelincir menjadi kapitalisme kroni.</p>
+                <p style="font-size:11px; color:var(--ink-light); margin-top:10px; font-style:italic;">Catatan: ide dan draf tulisan saya buat, kemudian disempurnakan dengan bantuan AI agar lebih mudah dibaca.</p>
+              </div>
+              <button onclick="
+                var f = document.getElementById('opinion-1-full');
+                var open = f.style.display !== 'none';
+                f.style.display = open ? 'none' : 'block';
+                this.textContent = open ? '... read more ▾' : 'show less ▴';
+              " style="background:none; border:1px solid var(--accent); color:var(--accent); font-size:12px; font-weight:500; cursor:pointer; padding:4px 14px; border-radius:20px; letter-spacing:0.03em; transition:all 0.2s;" onmouseover="this.style.background='var(--accent-light)'" onmouseout="this.style.background='none'">... read more ▾</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Featured Research</div>
+
+        <div style="border:1px solid var(--ink-faint); border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+
+          <!-- Top accent bar -->
+          <div style="height:5px; background:linear-gradient(90deg, #1e3a5f, #2a5298, #3b82f6);"></div>
+
+          <!-- Paper header -->
+          <div style="padding:20px 22px 0;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+              <span style="font-size:11px; background:#fef3c7; color:#92400e; font-weight:500; padding:3px 10px; border-radius:10px; border:1px solid #fcd34d;">🆕 Just Published · 2026</span>
+              <span style="font-size:11px; background:var(--accent-light); color:var(--accent); font-weight:500; padding:3px 10px; border-radius:10px;">Disaster Economics</span>
+              <span style="font-size:11px; background:var(--accent-light); color:var(--accent); font-weight:500; padding:3px 10px; border-radius:10px;">Urban Resilience</span>
+              <span style="font-size:11px; background:var(--accent-light); color:var(--accent); font-weight:500; padding:3px 10px; border-radius:10px;">Sustainable Cities</span>
+            </div>
+            <div style="font-size:16px; font-weight:500; color:var(--ink); line-height:1.45; margin-bottom:8px;">Earthquake Disaster and Economic Impact Assessment towards Sustainable Cities and Communities: Case Study in South Jakarta District, Indonesia</div>
+            <div style="font-size:12px; color:var(--ink-light); margin-bottom:4px;"><strong style="color:var(--ink-mid); font-weight:500;">Eko Agus Prasetio</strong>, Yukni Arifianti, Fitriani Agustin, Prahara Iqbal, Sarah Ismullah, Pandu Adi Minarno, Ikhwanut Taqwa, Ahmad Zulkifli, Nadiefa Hasna Shabiya</div>
+            <div style="font-size:12px; color:var(--ink-light); margin-bottom:16px;">
+              <a href="https://www.sciencedirect.com/science/article/pii/S3051052X26000410" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:500;">ScienceDirect ↗</a>
+            </div>
+          </div>
+
+          <!-- Visual explainer blocks -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0; border-top:1px solid var(--ink-faint);">
+
+            <div style="padding:16px 18px; border-right:1px solid var(--ink-faint); border-bottom:1px solid var(--ink-faint);">
+              <div style="font-size:22px; margin-bottom:6px;">🌏</div>
+              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">Why Jakarta?</div>
+              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Indonesia sits on one of the most seismically active zones on Earth. Yet Jakarta — a dense, high-value economic hub — has rarely had its earthquake risk quantified in economic terms. This study fills that gap.</p>
+            </div>
+
+            <div style="padding:16px 18px; border-right:1px solid var(--ink-faint); border-bottom:1px solid var(--ink-faint);">
+              <div style="font-size:22px; margin-bottom:6px;">📐</div>
+              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">What Was Measured</div>
+              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Using GIS-based fuzzy logic, seismic ground acceleration data, and business asset valuations across 214 facilities in Kebayoran Baru, the study mapped where earthquake hazard and economic value dangerously overlap.</p>
+            </div>
+
+            <div style="padding:16px 18px; border-bottom:1px solid var(--ink-faint);">
+              <div style="font-size:22px; margin-bottom:6px;">💡</div>
+              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">The Surprising Finding</div>
+              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Finance, IT, legal services, and retail sit in the highest-risk zones — with risk scores up to <strong style="color:var(--ink);">0.704</strong>. Yet digital-first businesses show strong resilience: flexible work and cloud infrastructure limit real damage to temporary access loss.</p>
+            </div>
+
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0; border-bottom:1px solid var(--ink-faint);">
+
+            <div style="padding:16px 18px; border-right:1px solid var(--ink-faint);">
+              <div style="font-size:22px; margin-bottom:6px;">🏗️</div>
+              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">The Price Tag</div>
+              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Reconstruction cost estimates range from <strong style="color:var(--ink);">IDR 204.7 million to IDR 3.06 billion per building</strong> — giving urban planners and insurers a replicable framework for post-disaster financial planning.</p>
+            </div>
+
+            <div style="padding:16px 18px; border-right:1px solid var(--ink-faint);">
+              <div style="font-size:22px; margin-bottom:6px;">🗺️</div>
+              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">Who Should Act</div>
+              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">The study bridges science and policy — equipping city planners, disaster managers, and investors with maps, risk indices, and cost models to prioritise mitigation and build a more resilient Jakarta.</p>
+            </div>
+
+            <div style="padding:16px 18px;">
+              <div style="font-size:22px; margin-bottom:6px;">🌱</div>
+              <div style="font-size:12px; font-weight:500; color:var(--ink); margin-bottom:5px;">Bigger Picture</div>
+              <p style="font-size:12px; color:var(--ink-mid); line-height:1.6; margin:0;">Beyond Jakarta, this methodology offers a <strong style="color:var(--ink);">replicable blueprint</strong> for any emerging-economy city sitting at the intersection of rapid urban growth and natural hazard exposure.</p>
+            </div>
+
+          </div>
+
+          <!-- Bottom CTA -->
+          <div style="padding:14px 22px; background:var(--paper-warm); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+            <div style="font-size:12px; color:var(--ink-light); font-style:italic;">Published in <em>International Journal of Disaster Risk Reduction</em> · Elsevier · 2026</div>
+            <a href="https://www.sciencedirect.com/science/article/pii/S3051052X26000410" target="_blank" style="display:inline-flex; align-items:center; gap:6px; background:var(--accent); color:#fff; font-size:12px; font-weight:500; padding:7px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Read Full Paper ↗</a>
+          </div>
+
+        </div>
       </div>
 
       <div class="section">
