@@ -266,7 +266,125 @@
     body { font-size: 14px; }
   }
 </style>
-</head>
+
+<style>
+
+
+.pub-filter {
+  background: none;
+  border: 1px solid var(--ink-faint);
+  color: var(--ink-mid);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 13px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.pub-filter:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+.pub-filter.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.pub-item {
+  transition: opacity 0.2s, transform 0.2s;
+}
+.pub-item.hidden {
+  display: none;
+}
+
+</style>
+<script>
+
+
+function pubFilter(btn) {
+  document.querySelectorAll('.pub-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filter = btn.dataset.filter;
+  const items = document.querySelectorAll('.pub-item');
+  let visible = 0;
+  items.forEach(item => {
+    const tags = item.dataset.tags || '';
+    const show = filter === 'all' || tags.includes(filter);
+    item.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  const total = items.length;
+  const countEl = document.getElementById('pub-count');
+  countEl.textContent = filter === 'all'
+    ? `Showing all ${total} publications`
+    : `Showing ${visible} of ${total} publications`;
+  document.getElementById('pub-empty').style.display = visible === 0 ? 'block' : 'none';
+  document.getElementById('pub-list').style.display = visible === 0 ? 'none' : 'flex';
+}
+
+
+(function(){
+  const canvas = document.getElementById('network-canvas');
+  const header = canvas.parentElement;
+  const ctx = canvas.getContext('2d');
+  let W, H, dots, raf;
+  const NUM = 75, MAX_DIST = 130, DOT_R = 2.2;
+
+  function resize() {
+    W = canvas.width = header.offsetWidth;
+    H = canvas.height = header.offsetHeight;
+  }
+
+  function makeDot() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4
+    };
+  }
+
+  function init() {
+    resize();
+    dots = Array.from({length: NUM}, makeDot);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < dots.length; i++) {
+      const d = dots[i];
+      d.x += d.vx; d.y += d.vy;
+      if (d.x < 0 || d.x > W) d.vx *= -1;
+      if (d.y < 0 || d.y > H) d.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, DOT_R, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(160,200,255,0.55)';
+      ctx.fill();
+      for (let j = i + 1; j < dots.length; j++) {
+        const d2 = dots[j];
+        const dx = d.x - d2.x, dy = d.y - d2.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < MAX_DIST) {
+          ctx.beginPath();
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(d2.x, d2.y);
+          ctx.strokeStyle = `rgba(160,200,255,${0.28 * (1 - dist / MAX_DIST)})`;
+          ctx.lineWidth = 0.9;
+          ctx.stroke();
+        }
+      }
+    }
+    raf = requestAnimationFrame(draw);
+  }
+
+  init();
+  draw();
+  window.addEventListener('resize', () => { cancelAnimationFrame(raf); init(); draw(); });
+})();
+
+</script>
+</head></head>
 <body>
 
 <div class="header">
@@ -327,94 +445,43 @@
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:12px;">
 
           <div style="background:var(--accent-light); border-radius:10px; padding:14px 14px 12px; border:1px solid #c8d8ee;">
-            <div style="margin-bottom:8px;">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="14" cy="14" r="13" fill="#1e3a5f" fill-opacity="0.12"/>
-                <path d="M14 7 L17 11 L22 12 L18 16 L19 21 L14 18.5 L9 21 L10 16 L6 12 L11 11 Z" fill="#1e3a5f" fill-opacity="0.7"/>
-              </svg>
-            </div>
+            <div style="margin-bottom:8px;"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="#1e3a5f" fill-opacity="0.12"/><path d="M14 7 L17 11 L22 12 L18 16 L19 21 L14 18.5 L9 21 L10 16 L6 12 L11 11 Z" fill="#1e3a5f" fill-opacity="0.7"/></svg></div>
             <div style="font-size:12px; font-weight:500; color:#1e3a5f; margin-bottom:3px;">Innovation Management</div>
             <div style="font-size:10px; color:#2a5298; line-height:1.4;">Disruptive · Open · Technology Commercialization</div>
           </div>
 
           <div style="background:#eaf3de; border-radius:10px; padding:14px 14px 12px; border:1px solid #b8d89a;">
-            <div style="margin-bottom:8px;">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="14" cy="14" r="13" fill="#3b6d11" fill-opacity="0.12"/>
-                <rect x="7" y="16" width="4" height="6" rx="1" fill="#3b6d11" fill-opacity="0.7"/>
-                <rect x="12" y="12" width="4" height="10" rx="1" fill="#3b6d11" fill-opacity="0.7"/>
-                <rect x="17" y="8" width="4" height="14" rx="1" fill="#3b6d11" fill-opacity="0.7"/>
-              </svg>
-            </div>
+            <div style="margin-bottom:8px;"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="#3b6d11" fill-opacity="0.12"/><rect x="7" y="16" width="4" height="6" rx="1" fill="#3b6d11" fill-opacity="0.7"/><rect x="12" y="12" width="4" height="10" rx="1" fill="#3b6d11" fill-opacity="0.7"/><rect x="17" y="8" width="4" height="14" rx="1" fill="#3b6d11" fill-opacity="0.7"/></svg></div>
             <div style="font-size:12px; font-weight:500; color:#27500a; margin-bottom:3px;">Digital Transformation</div>
             <div style="font-size:10px; color:#3b6d11; line-height:1.4;">Industry 4.0 · Technology Adoption · Digital Platforms</div>
           </div>
 
           <div style="background:#faeeda; border-radius:10px; padding:14px 14px 12px; border:1px solid #f0c870;">
-            <div style="margin-bottom:8px;">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="14" cy="14" r="13" fill="#854f0b" fill-opacity="0.12"/>
-                <path d="M8 18 Q14 10 20 18" stroke="#854f0b" stroke-width="2" fill="none" stroke-opacity="0.8"/>
-                <circle cx="8" cy="18" r="2.5" fill="#854f0b" fill-opacity="0.7"/>
-                <circle cx="14" cy="13" r="2.5" fill="#854f0b" fill-opacity="0.7"/>
-                <circle cx="20" cy="18" r="2.5" fill="#854f0b" fill-opacity="0.7"/>
-              </svg>
-            </div>
+            <div style="margin-bottom:8px;"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="#854f0b" fill-opacity="0.12"/><path d="M8 18 Q14 10 20 18" stroke="#854f0b" stroke-width="2" fill="none" stroke-opacity="0.8"/><circle cx="8" cy="18" r="2.5" fill="#854f0b" fill-opacity="0.7"/><circle cx="14" cy="13" r="2.5" fill="#854f0b" fill-opacity="0.7"/><circle cx="20" cy="18" r="2.5" fill="#854f0b" fill-opacity="0.7"/></svg></div>
             <div style="font-size:12px; font-weight:500; color:#633806; margin-bottom:3px;">Electric &amp; Autonomous Vehicles</div>
             <div style="font-size:10px; color:#854f0b; line-height:1.4;">EV Policy · AV Adoption · Sustainable Mobility</div>
           </div>
 
-
           <div style="background:#eeedfe; border-radius:10px; padding:14px 14px 12px; border:1px solid #c0bbf0;">
-              <div style="margin-bottom:8px;">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="14" cy="14" r="13" fill="#534ab7" fill-opacity="0.12"/>
-                  <circle cx="14" cy="10" r="3" fill="#534ab7" fill-opacity="0.7"/>
-                  <circle cx="8" cy="19" r="2.5" fill="#534ab7" fill-opacity="0.5"/>
-                  <circle cx="20" cy="19" r="2.5" fill="#534ab7" fill-opacity="0.5"/>
-                  <line x1="14" y1="13" x2="8" y2="17" stroke="#534ab7" stroke-width="1.5" stroke-opacity="0.6"/>
-                  <line x1="14" y1="13" x2="20" y2="17" stroke="#534ab7" stroke-width="1.5" stroke-opacity="0.6"/>
-                </svg>
-              </div>
-              <div style="font-size:12px; font-weight:500; color:#3c3489; margin-bottom:3px;">Entrepreneurship &amp; SMEs</div>
-              <div style="font-size:10px; color:#534ab7; line-height:1.4;">Startup Development · University Spin-offs · Social Entrepreneurship</div>
-            </div>
+            <div style="margin-bottom:8px;"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="#534ab7" fill-opacity="0.12"/><circle cx="14" cy="10" r="3" fill="#534ab7" fill-opacity="0.7"/><circle cx="8" cy="19" r="2.5" fill="#534ab7" fill-opacity="0.5"/><circle cx="20" cy="19" r="2.5" fill="#534ab7" fill-opacity="0.5"/><line x1="14" y1="13" x2="8" y2="17" stroke="#534ab7" stroke-width="1.5" stroke-opacity="0.6"/><line x1="14" y1="13" x2="20" y2="17" stroke="#534ab7" stroke-width="1.5" stroke-opacity="0.6"/></svg></div>
+            <div style="font-size:12px; font-weight:500; color:#3c3489; margin-bottom:3px;">Entrepreneurship &amp; SMEs</div>
+            <div style="font-size:10px; color:#534ab7; line-height:1.4;">Startup Development · University Spin-offs · Social Entrepreneurship</div>
+          </div>
 
-            <div style="background:#e1f5ee; border-radius:10px; padding:14px 14px 12px; border:1px solid #7dd4b8;">
-              <div style="margin-bottom:8px;">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="14" cy="14" r="13" fill="#0f6e56" fill-opacity="0.12"/>
-                  <rect x="6" y="10" width="7" height="9" rx="1.5" fill="#0f6e56" fill-opacity="0.6"/>
-                  <rect x="15" y="7" width="7" height="12" rx="1.5" fill="#0f6e56" fill-opacity="0.4"/>
-                  <path d="M13 14.5 L15 14.5" stroke="#0f6e56" stroke-width="1.5" stroke-opacity="0.7"/>
-                </svg>
-              </div>
-              <div style="font-size:12px; font-weight:500; color:#085041; margin-bottom:3px;">University–Industry Linkage</div>
-              <div style="font-size:10px; color:#0f6e56; line-height:1.4;">Tech Transfer · Knowledge Management · Open Innovation</div>
-            </div>
+          <div style="background:#e1f5ee; border-radius:10px; padding:14px 14px 12px; border:1px solid #7dd4b8;">
+            <div style="margin-bottom:8px;"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="#0f6e56" fill-opacity="0.12"/><rect x="6" y="10" width="7" height="9" rx="1.5" fill="#0f6e56" fill-opacity="0.6"/><rect x="15" y="7" width="7" height="12" rx="1.5" fill="#0f6e56" fill-opacity="0.4"/><path d="M13 14.5 L15 14.5" stroke="#0f6e56" stroke-width="1.5" stroke-opacity="0.7"/></svg></div>
+            <div style="font-size:12px; font-weight:500; color:#085041; margin-bottom:3px;">University–Industry Linkage</div>
+            <div style="font-size:10px; color:#0f6e56; line-height:1.4;">Tech Transfer · Knowledge Management · Open Innovation</div>
+          </div>
 
-            <div style="background:#faece7; border-radius:10px; padding:14px 14px 12px; border:1px solid #f0b090;">
-              <div style="margin-bottom:8px;">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="14" cy="14" r="13" fill="#993c1d" fill-opacity="0.12"/>
-                  <circle cx="9" cy="14" r="2.5" fill="#993c1d" fill-opacity="0.6"/>
-                  <circle cx="14" cy="9" r="2.5" fill="#993c1d" fill-opacity="0.6"/>
-                  <circle cx="19" cy="14" r="2.5" fill="#993c1d" fill-opacity="0.6"/>
-                  <circle cx="14" cy="19" r="2.5" fill="#993c1d" fill-opacity="0.6"/>
-                  <line x1="11" y1="14" x2="12" y2="14" stroke="#993c1d" stroke-width="1.2" stroke-opacity="0.5"/>
-                  <line x1="16" y1="14" x2="17" y2="14" stroke="#993c1d" stroke-width="1.2" stroke-opacity="0.5"/>
-                  <line x1="14" y1="11" x2="14" y2="12" stroke="#993c1d" stroke-width="1.2" stroke-opacity="0.5"/>
-                  <line x1="14" y1="16" x2="14" y2="17" stroke="#993c1d" stroke-width="1.2" stroke-opacity="0.5"/>
-                </svg>
-              </div>
-              <div style="font-size:12px; font-weight:500; color:#712b13; margin-bottom:3px;">Agent-based &amp; Systems Modelling</div>
-              <div style="font-size:10px; color:#993c1d; line-height:1.4;">5G Diffusion · EV Transition · Technology Forecasting</div>
-            </div>
+          <div style="background:#faece7; border-radius:10px; padding:14px 14px 12px; border:1px solid #f0b090;">
+            <div style="margin-bottom:8px;"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="#993c1d" fill-opacity="0.12"/><circle cx="9" cy="14" r="2.5" fill="#993c1d" fill-opacity="0.6"/><circle cx="14" cy="9" r="2.5" fill="#993c1d" fill-opacity="0.6"/><circle cx="19" cy="14" r="2.5" fill="#993c1d" fill-opacity="0.6"/><circle cx="14" cy="19" r="2.5" fill="#993c1d" fill-opacity="0.6"/><line x1="11" y1="14" x2="12" y2="14" stroke="#993c1d" stroke-width="1.2" stroke-opacity="0.5"/><line x1="16" y1="14" x2="17" y2="14" stroke="#993c1d" stroke-width="1.2" stroke-opacity="0.5"/><line x1="14" y1="11" x2="14" y2="12" stroke="#993c1d" stroke-width="1.2" stroke-opacity="0.5"/><line x1="14" y1="16" x2="14" y2="17" stroke="#993c1d" stroke-width="1.2" stroke-opacity="0.5"/></svg></div>
+            <div style="font-size:12px; font-weight:500; color:#712b13; margin-bottom:3px;">Agent-based &amp; Systems Modelling</div>
+            <div style="font-size:10px; color:#993c1d; line-height:1.4;">5G Diffusion · EV Transition · Technology Forecasting</div>
+          </div>
 
         </div>
-
       </div>
-
 
       <div class="section">
         <div class="section-title">Recent Activities</div>
@@ -670,7 +737,7 @@
 
           <!-- Bottom CTA -->
           <div style="padding:14px 22px; background:var(--paper-warm); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-            <div style="font-size:12px; color:var(--ink-light); font-style:italic;">Published in <em>International Journal of Disaster Risk Reduction</em> · Elsevier · 2026</div>
+            <div style="font-size:12px; color:var(--ink-light); font-style:italic;">Published in <em>Sustainable Cities and Society: Advances</em> · Elsevier · Available online 23 April 2026</div>
             <a href="https://www.sciencedirect.com/science/article/pii/S3051052X26000410" target="_blank" style="display:inline-flex; align-items:center; gap:6px; background:var(--accent); color:#fff; font-size:12px; font-weight:500; padding:7px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Read Full Paper ↗</a>
           </div>
 
@@ -679,76 +746,99 @@
 
       <div class="section">
         <div class="section-title">Selected Publications</div>
-        <div class="pub-list">
 
-          <div class="pub">
+        <!-- Filter controls -->
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; align-items:center;">
+          <span style="font-size:11px; color:var(--ink-light); text-transform:uppercase; letter-spacing:0.08em; margin-right:4px;">Filter:</span>
+          <button class="pub-filter active" data-filter="all" onclick="pubFilter(this)">All</button>
+          <button class="pub-filter" data-filter="q1" onclick="pubFilter(this)">Q1</button>
+          <button class="pub-filter" data-filter="q2" onclick="pubFilter(this)">Q2</button>
+          <button class="pub-filter" data-filter="ev" onclick="pubFilter(this)">EV / AV</button>
+          <button class="pub-filter" data-filter="innovation" onclick="pubFilter(this)">Innovation</button>
+          <button class="pub-filter" data-filter="digital" onclick="pubFilter(this)">Digital</button>
+          <button class="pub-filter" data-filter="2025+" onclick="pubFilter(this)">2025–26</button>
+          <button class="pub-filter" data-filter="book" onclick="pubFilter(this)">Book Chapter</button>
+        </div>
+
+        <!-- Count indicator -->
+        <div id="pub-count" style="font-size:12px; color:var(--ink-light); margin-bottom:12px; font-style:italic;">Showing all 11 publications</div>
+
+        <div class="pub-list" id="pub-list">
+
+          <div class="pub pub-item" data-tags="q1 ev 2025+">
             <div class="pub-title">Cluster analysis of potential autonomous vehicle (AV) adopters in Indonesia's new capital</div>
             <div class="pub-meta"><em>Transportation Research Interdisciplinary Perspectives</em>, 29, 101318 &nbsp;·&nbsp; Main Author</div>
             <div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2025</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="q1 innovation digital 2025+">
             <div class="pub-title">Overcoming knowledge asymmetry through knowledge transfer in technology adoption process</div>
             <div class="pub-meta"><em>Knowledge Management Research &amp; Practice</em>, 1–17</div>
             <div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2025</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="q1 2025+">
             <div class="pub-title">Real option valuation for refinery and petrochemical investments: A feasibility study in Indonesia</div>
             <div class="pub-meta"><em>Energy Reports</em>, 13, 1321–1331</div>
             <div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2025</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="q1 ev">
             <div class="pub-title">Evaluating perceived safety of autonomous vehicle: The influence of privacy and cybersecurity on cognitive and emotional safety</div>
             <div class="pub-meta"><em>IATSS Research</em>, 47(2), 160–170 &nbsp;·&nbsp; Author</div>
             <div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2023</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="q1 innovation">
             <div class="pub-title">Investigating the Influence of Network Effects on the Mechanism of Disruptive Innovation</div>
             <div class="pub-meta"><em>Journal of Open Innovation: Technology, Market and Complexity</em>, 8(3), 157 &nbsp;·&nbsp; Author</div>
             <div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2022</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="q1 digital">
             <div class="pub-title">Two Scenarios for 5G Deployment in Indonesia</div>
             <div class="pub-meta"><em>Technological Forecasting &amp; Social Change</em>, 160, 120221</div>
             <div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2020</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="q1 ev 2025+">
             <div class="pub-title">Does range or fiscal policies matter on EV adoption in Jakarta Metropolitan Area?</div>
             <div class="pub-meta"><em>Transportation Research Interdisciplinary Perspectives</em>, 23:101027</div>
             <div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2024</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="q2 innovation digital">
             <div class="pub-title">The Influence of Technological Capability and Market Orientation toward Business Model Innovations of Digital Startups</div>
             <div class="pub-meta"><em>International Journal of Innovation Management</em>, 26(02), 2250018</div>
             <div class="pub-badges"><span class="badge badge-q2">Scopus Q2</span><span class="badge badge-year">2022</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="q1 innovation 2025+">
             <div class="pub-title">Practical model of technology commercialization at an Indonesian university: A case study from Institut Teknologi Bandung</div>
             <div class="pub-meta"><em>Journal of Open Innovation: Technology, Market and Complexity</em>, 10(3), 100341</div>
             <div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2024</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="q2 digital">
             <div class="pub-title">An Agent-based Model for 5G Technology Diffusion in Urban Societies: Simulating Two Development Scenarios</div>
             <div class="pub-meta"><em>Sustainability</em>, 13(22), 12698</div>
             <div class="pub-badges"><span class="badge badge-q2">Scopus Q2</span><span class="badge badge-year">2021</span></div>
           </div>
 
-          <div class="pub">
+          <div class="pub pub-item" data-tags="book">
             <div class="pub-title">Local Content Policy in Indonesia Oil and Gas Industry</div>
             <div class="pub-meta">Book chapter in <em>Sovereign Wealth Funds, Local Content Policies and CSR</em>, pp. 293–307, Springer</div>
             <div class="pub-badges"><span class="badge badge-scopus">Book Chapter</span><span class="badge badge-year">2021</span></div>
           </div>
 
         </div>
+
+        <!-- Empty state -->
+        <div id="pub-empty" style="display:none; text-align:center; padding:24px; color:var(--ink-light); font-size:13px; font-style:italic;">No publications match this filter.</div>
+
       </div>
+
+
 
       <div class="section">
         <div class="section-title">Key Industry &amp; Government Projects</div>
@@ -873,7 +963,7 @@
 
       
 
-    </div>
+    
 
     <!-- SIDEBAR -->
     <div class="sidebar-col">
@@ -1023,66 +1113,5 @@
 <div class="footer">
   Research Profile &nbsp;·&nbsp; Dr. rer. pol. Eko Agus Prasetio, S.T., MBA, CIM&reg; &nbsp;·&nbsp; SBM-ITB &nbsp;·&nbsp; Bandung, Indonesia
 </div>
-
-<script>
-(function(){
-  const canvas = document.getElementById('network-canvas');
-  const header = canvas.parentElement;
-  const ctx = canvas.getContext('2d');
-  let W, H, dots, raf;
-  const NUM = 75, MAX_DIST = 130, DOT_R = 2.2;
-
-  function resize() {
-    W = canvas.width = header.offsetWidth;
-    H = canvas.height = header.offsetHeight;
-  }
-
-  function makeDot() {
-    return {
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4
-    };
-  }
-
-  function init() {
-    resize();
-    dots = Array.from({length: NUM}, makeDot);
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    for (let i = 0; i < dots.length; i++) {
-      const d = dots[i];
-      d.x += d.vx; d.y += d.vy;
-      if (d.x < 0 || d.x > W) d.vx *= -1;
-      if (d.y < 0 || d.y > H) d.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(d.x, d.y, DOT_R, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(160,200,255,0.55)';
-      ctx.fill();
-      for (let j = i + 1; j < dots.length; j++) {
-        const d2 = dots[j];
-        const dx = d.x - d2.x, dy = d.y - d2.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < MAX_DIST) {
-          ctx.beginPath();
-          ctx.moveTo(d.x, d.y);
-          ctx.lineTo(d2.x, d2.y);
-          ctx.strokeStyle = `rgba(160,200,255,${0.28 * (1 - dist / MAX_DIST)})`;
-          ctx.lineWidth = 0.9;
-          ctx.stroke();
-        }
-      }
-    }
-    raf = requestAnimationFrame(draw);
-  }
-
-  init();
-  draw();
-  window.addEventListener('resize', () => { cancelAnimationFrame(raf); init(); draw(); });
-})();
-</script>
 </body>
 </html>
