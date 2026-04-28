@@ -1018,6 +1018,114 @@ document.addEventListener('DOMContentLoaded', function(){
       </div>
 
       <div class="section">
+        <div class="section-title">Research Collaboration Network</div>
+        <p style="font-size:13px; color:var(--ink-light); margin-bottom:14px; font-style:italic;">Co-authorship network across 40 collaborators · 6 topic clusters · 3 international institutions. Hover a node for details · drag to rearrange · filter by topic.</p>
+
+        <div style="border:1px solid var(--ink-faint); border-radius:10px; overflow:hidden; background:var(--paper);">
+          <div style="height:4px; background:linear-gradient(90deg,#185FA5,#1D9E75,#BA7517,#993C1D,#7F77DD);"></div>
+          <div style="padding:14px 16px 10px;">
+
+            <!-- Legend -->
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px; font-size:11px; color:var(--ink-mid);">
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#185FA5;display:inline-block;"></span>EAP (centre)</span>
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#1D9E75;display:inline-block;"></span>SBM-ITB</span>
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#BA7517;display:inline-block;"></span>External</span>
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#993C1D;display:inline-block;"></span>PhD students</span>
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#7F77DD;display:inline-block;"></span>International</span>
+            </div>
+
+            <!-- Canvas -->
+            <canvas id="netCanvasWeb" style="width:100%;border-radius:8px;border:0.5px solid var(--ink-faint);cursor:grab;display:block;" height="480"></canvas>
+
+            <!-- Info box -->
+            <div id="netInfoWeb" style="background:var(--paper-warm);border-radius:6px;padding:8px 12px;margin-top:8px;min-height:42px;font-size:11px;color:var(--ink-light);">Hover over a node to see collaboration details</div>
+
+            <!-- Filters -->
+            <div style="margin-top:8px;display:flex;gap:5px;flex-wrap:wrap;">
+              <button onclick="netFilterWeb('all',this)" id="nfw-all" style="font-size:10px;padding:2px 10px;border-radius:16px;border:0.5px solid var(--accent);background:var(--accent-light);color:var(--accent);cursor:pointer;">All</button>
+              <button onclick="netFilterWeb('EV/AV',this)" id="nfw-ev" style="font-size:10px;padding:2px 10px;border-radius:16px;border:0.5px solid var(--ink-faint);background:none;color:var(--ink-mid);cursor:pointer;">EV / AV</button>
+              <button onclick="netFilterWeb('Digital',this)" id="nfw-dig" style="font-size:10px;padding:2px 10px;border-radius:16px;border:0.5px solid var(--ink-faint);background:none;color:var(--ink-mid);cursor:pointer;">Digital</button>
+              <button onclick="netFilterWeb('Innovation',this)" id="nfw-inn" style="font-size:10px;padding:2px 10px;border-radius:16px;border:0.5px solid var(--ink-faint);background:none;color:var(--ink-mid);cursor:pointer;">Innovation</button>
+              <button onclick="netFilterWeb('Energy',this)" id="nfw-en" style="font-size:10px;padding:2px 10px;border-radius:16px;border:0.5px solid var(--ink-faint);background:none;color:var(--ink-mid);cursor:pointer;">Energy</button>
+              <button onclick="netFilterWeb('Entrepreneurship',this)" id="nfw-ent" style="font-size:10px;padding:2px 10px;border-radius:16px;border:0.5px solid var(--ink-faint);background:none;color:var(--ink-mid);cursor:pointer;">Entrepreneurship</button>
+              <button onclick="netFilterWeb('Intl',this)" id="nfw-int" style="font-size:10px;padding:2px 10px;border-radius:16px;border:0.5px solid var(--ink-faint);background:none;color:var(--ink-mid);cursor:pointer;">🌐 International</button>
+            </div>
+          </div>
+        </div>
+
+        <script>
+        (function(){
+        var PW={center:'#185FA5',sbm:'#1D9E75',ext:'#BA7517',phd:'#993C1D',intl:'#7F77DD',
+          centerE:'rgba(24,95,165,0.45)',sbmE:'rgba(29,158,117,0.38)',extE:'rgba(186,117,23,0.38)',
+          phdE:'rgba(153,60,29,0.38)',intlE:'rgba(127,119,221,0.45)'};
+        var TCW={'EV/AV':'#BA7517','Digital':'#185FA5','Innovation':'#1D9E75','Energy':'#A32D2D','Entrepreneurship':'#7F77DD','Intl':'#534AB7'};
+        var CLW={0:'center',1:'sbm',2:'phd',3:'ext',4:'phd',5:'sbm',6:'ext',7:'ext',8:'ext',9:'ext',10:'ext',11:'phd',12:'phd',13:'phd',14:'phd',15:'ext',16:'ext',17:'phd',18:'sbm',19:'sbm',20:'sbm',21:'phd',22:'sbm',23:'phd',24:'phd',25:'sbm',26:'ext',27:'ext',28:'ext',29:'ext',30:'ext',31:'intl',32:'intl',33:'intl',34:'sbm',35:'intl',36:'sbm',37:'ext',38:'sbm',39:'intl'};
+        var CSW={center:[0.5,0.5],sbm:[0.2,0.35],phd:[0.38,0.78],ext:[0.78,0.7],intl:[0.8,0.22]};
+        var NW=[
+          {id:0,l:'Eko Agus\nPrasetio',t:'center',p:30,top:['EV/AV','Digital','Innovation','Energy','Entrepreneurship','Intl'],inst:'SBM-ITB',note:'Centre · 30+ papers · 6 topic clusters · 3 international institutions'},
+          {id:1,l:'Wawan\nDhewanto',t:'sbm',p:6,top:['Digital','Innovation','Entrepreneurship','EV/AV'],inst:'SBM-ITB Prof.',note:'5G · rural entrepreneurship · EV adoption'},
+          {id:2,l:'Sahat\nHutajulu',t:'phd',p:3,top:['Digital'],inst:'SBM-ITB PhD',note:'5G deployment & commercialisation'},
+          {id:3,l:'Priyantono\nRudito',t:'ext',p:1,top:['Digital'],inst:'External',note:'5G commercialisation'},
+          {id:4,l:'Anton\nHerutomo',t:'phd',p:1,top:['Entrepreneurship'],inst:'SBM-ITB PhD',note:'Social entrepreneurship & SDGs'},
+          {id:5,l:'Sudrajati\nRatnaningtyas',t:'sbm',p:2,top:['Innovation','Entrepreneurship'],inst:'SBM-ITB',note:'Rural entrepreneurship · innovation clusters'},
+          {id:6,l:'Anggraeni\nPermatasari',t:'ext',p:1,top:['Entrepreneurship'],inst:'External',note:'Rural entrepreneurship'},
+          {id:7,l:'Grisna\nAnggadwita',t:'ext',p:1,top:['Entrepreneurship'],inst:'External',note:'Rural entrepreneurship'},
+          {id:8,l:'Sri Herliana',t:'ext',p:1,top:['Innovation'],inst:'External',note:'Innovation clusters · firm performance'},
+          {id:9,l:'Rendra\nChaerudin',t:'ext',p:1,top:['Innovation'],inst:'External',note:'Innovation clusters · firm performance'},
+          {id:10,l:'Qorri Aina',t:'ext',p:1,top:['Innovation'],inst:'External',note:'Innovation clusters · firm performance'},
+          {id:11,l:'Evy\nRachmawaty',t:'phd',p:1,top:['Innovation'],inst:'SBM-ITB PhD',note:'SME internationalisation'},
+          {id:12,l:'Cintia\nNurliyana',t:'phd',p:2,top:['EV/AV'],inst:'SBM-ITB PhD',note:'AV safety & cybersecurity'},
+          {id:13,l:'Dita\nNovizayanti',t:'phd',p:1,top:['EV/AV'],inst:'SBM-ITB PhD',note:'AV adoption clusters · Nusantara'},
+          {id:14,l:'Nadhira\nAliya Putri',t:'phd',p:1,top:['EV/AV'],inst:'SBM-ITB PhD',note:'AV adoption clusters'},
+          {id:15,l:'Aang\nUmbara',t:'ext',p:1,top:['EV/AV'],inst:'External',note:'Electric motorcycle adoption'},
+          {id:16,l:'Tiffany\nAr Rahim',t:'ext',p:1,top:['EV/AV'],inst:'External',note:'Electric motorcycle adoption'},
+          {id:17,l:'Abdurrahman',t:'phd',p:2,top:['Digital'],inst:'SBM-ITB PhD',note:'Digital transformation · banking TOE'},
+          {id:18,l:'Aurik\nGustomo',t:'sbm',p:2,top:['Digital'],inst:'SBM-ITB Prof.',note:'Banking performance · TOE framework'},
+          {id:19,l:'Dedy\nSushandoyo',t:'sbm',p:4,top:['Innovation','Intl'],inst:'SBM-ITB',note:'Digital startups · business model innovation · knowledge transfer'},
+          {id:20,l:'Retna\nKencanasari',t:'sbm',p:2,top:['Innovation'],inst:'SBM-ITB',note:'Learning for innovations · digital startups'},
+          {id:21,l:'Uruqul\nNadhif',t:'phd',p:2,top:['Innovation','Intl'],inst:'SBM-ITB PhD',note:'Technology commercialisation · ITB case study'},
+          {id:22,l:'Gatot\nYudoko',t:'sbm',p:2,top:['Innovation','Digital'],inst:'SBM-ITB Prof.',note:'SME internationalisation · early warning'},
+          {id:23,l:'Novia\nHafnidah',t:'phd',p:1,top:['Innovation'],inst:'SBM-ITB PhD',note:'Organisational resilience'},
+          {id:24,l:'Tirta Wisnu\nPermana',t:'phd',p:1,top:['Digital'],inst:'SBM-ITB PhD',note:'Industrial early warning system'},
+          {id:25,l:'Sarah\nIsmullah',t:'sbm',p:1,top:['Energy'],inst:'SBM-ITB',note:'Earthquake economic impact'},
+          {id:26,l:'Yukni\nArifianti',t:'ext',p:1,top:['Energy'],inst:'External',note:'Seismic hazard'},
+          {id:27,l:'Fitriani\nAgustin',t:'ext',p:1,top:['Energy'],inst:'External',note:'Earthquake economic impact'},
+          {id:28,l:'Prahara\nIqbal',t:'ext',p:1,top:['Energy'],inst:'External',note:'Earthquake economic impact'},
+          {id:29,l:'Reizaldi\nGustino',t:'ext',p:1,top:['Energy'],inst:'External',note:'Real options · refinery investment'},
+          {id:30,l:'Dzikri\nFirmansyah',t:'ext',p:1,top:['Energy'],inst:'External',note:'Real options · petrochemical'},
+          {id:31,l:'Amalia\nSuryani',t:'intl',p:2,top:['Energy','Intl'],inst:'Univ. of Twente',note:'Microgrid interoperability · power quality sensor'},
+          {id:32,l:'Niek\nMoonen',t:'intl',p:2,top:['Energy','Intl'],inst:'Univ. of Twente',note:'Electromagnetic compatibility · smart grids'},
+          {id:33,l:'Jelena\nPopovic',t:'intl',p:2,top:['Energy','Intl'],inst:'Univ. of Twente',note:'Energy access · off-grid · IEEE PELS TC-12'},
+          {id:34,l:'M. Rizki\nAflahul',t:'sbm',p:1,top:['Energy','Intl'],inst:'SBM-ITB',note:'Power quality sensor valorization'},
+          {id:35,l:'Yoshiyuki\nMatsuura',t:'intl',p:3,top:['Innovation','Intl'],inst:'Yamaguchi Univ. Japan',note:'Digital startups · tech commercialisation · knowledge transfer'},
+          {id:36,l:'Togar\nSimatupang',t:'sbm',p:2,top:['Innovation'],inst:'SBM-ITB Prof.',note:'Technology commercialisation · ITB case study'},
+          {id:37,l:'Maulana Rafi\nDamar',t:'ext',p:1,top:['Innovation'],inst:'External',note:'Knowledge asymmetry · knowledge transfer'},
+          {id:38,l:'Muhammad Yorga\nPermana',t:'sbm',p:1,top:['Innovation'],inst:'SBM-ITB',note:'Knowledge transfer · technology adoption'},
+          {id:39,l:'Naufal\nTisyadi',t:'intl',p:1,top:['Innovation','Intl'],inst:'Tilburg Univ. Netherlands',note:'Knowledge asymmetry · knowledge transfer'},
+        ];
+        var EW=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],[0,10],[0,11],[0,12],[0,13],[0,14],[0,15],[0,16],[0,17],[0,18],[0,19],[0,20],[0,21],[0,22],[0,23],[0,24],[0,25],[0,26],[0,27],[0,28],[0,29],[0,30],[0,31],[0,32],[0,33],[0,34],[0,35],[0,36],[0,37],[0,38],[0,39],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],[1,9],[1,10],[1,11],[1,15],[1,16],[2,3],[5,6],[5,7],[8,9],[8,10],[8,11],[9,10],[9,11],[13,14],[17,18],[22,24],[25,26],[25,27],[25,28],[26,27],[26,28],[27,28],[29,30],[31,32],[31,33],[32,33],[31,34],[32,34],[33,34],[19,35],[19,20],[19,37],[19,38],[19,39],[21,35],[21,36],[35,36],[35,37],[35,38],[35,39],[36,21],[38,39],[37,39]];
+        var cfW='all',hovW=null,posW=[],dragW=null;
+        function RW(n,i){return i===0?24:9+Math.min(n.p*1.9,13);}
+        function initW(W,H){posW=NW.map(function(n,i){if(i===0)return{x:W/2,y:H/2,vx:0,vy:0};var cl=CLW[i]||'ext';var b=CSW[cl]||[0.5,0.5];return{x:(b[0]+(0.5-Math.random())*0.32)*W,y:(b[1]+(0.5-Math.random())*0.32)*H,vx:0,vy:0};});}
+        function visW(){if(cfW==='all')return new Set(NW.map(function(n){return n.id;}));return new Set(NW.filter(function(n){return n.id===0||n.top.indexOf(cfW)>=0;}).map(function(n){return n.id;}));}
+        function simW(W,H){var v=visW();for(var i=0;i<NW.length;i++){if(!v.has(i)||i===dragW)continue;var fx=0,fy=0;for(var j=0;j<NW.length;j++){if(i===j||!v.has(j))continue;var dx=posW[i].x-posW[j].x,dy=posW[i].y-posW[j].y,d2=dx*dx+dy*dy+1;fx+=2200*dx/d2;fy+=2200*dy/d2;}EW.forEach(function(e){var a=e[0],b=e[1];if((a===i||b===i)&&v.has(a)&&v.has(b)){var j2=a===i?b:a;var dx2=posW[j2].x-posW[i].x,dy2=posW[j2].y-posW[i].y,d=Math.sqrt(dx2*dx2+dy2*dy2)||1,tgt=i===0||j2===0?128:56;fx+=0.032*(d-tgt)*dx2/d;fy+=0.032*(d-tgt)*dy2/d;}});var cl=CLW[i]||'ext',b=CSW[cl]||[0.5,0.5];fx+=(b[0]*W-posW[i].x)*0.004;fy+=(b[1]*H-posW[i].y)*0.004;posW[i].vx=(posW[i].vx+fx)*0.7;posW[i].vy=(posW[i].vy+fy)*0.7;posW[i].x=Math.max(26,Math.min(W-26,posW[i].x+posW[i].vx));posW[i].y=Math.max(26,Math.min(H-26,posW[i].y+posW[i].vy));}}
+        function ecW(a,b){if(a===0||b===0)return PW[(a===0?NW[b].t:NW[a].t)+'E']||'rgba(120,120,120,0.2)';return PW[NW[a].t+'E']||'rgba(120,120,120,0.18)';}
+        function drawW(cv){var W=cv.width,H=cv.height,ctx=cv.getContext('2d');ctx.clearRect(0,0,W,H);var v=visW(),tc='#2c2c2a';EW.forEach(function(e){var a=e[0],b=e[1];if(!v.has(a)||!v.has(b))return;var isH=hovW!==null&&(a===hovW||b===hovW),same=NW[a].t===NW[b].t&&a!==0&&b!==0;ctx.beginPath();ctx.moveTo(posW[a].x,posW[a].y);ctx.lineTo(posW[b].x,posW[b].y);ctx.strokeStyle=isH?'rgba(0,0,0,0.4)':ecW(a,b);ctx.lineWidth=isH?2:same?1.2:0.65;ctx.stroke();});NW.forEach(function(n,i){if(!v.has(i))return;var r=RW(n,i),isH=i===hovW;var conn=hovW!==null&&(i===hovW||EW.some(function(e){return(e[0]===hovW&&e[1]===i)||(e[1]===hovW&&e[0]===i);}));ctx.globalAlpha=(hovW===null||conn)?1:0.13;if(i===0){ctx.beginPath();ctx.arc(posW[i].x,posW[i].y,r+7,0,Math.PI*2);ctx.fillStyle='rgba(24,95,165,0.15)';ctx.fill();}ctx.beginPath();ctx.arc(posW[i].x,posW[i].y,r+(isH?4:0),0,Math.PI*2);ctx.fillStyle=PW[n.t]||'#888';ctx.fill();if(isH||i===0){ctx.strokeStyle='rgba(0,0,0,0.25)';ctx.lineWidth=i===0?2:1.4;ctx.stroke();}ctx.fillStyle=tc;ctx.font=(i===0?'500 9':'8')+'px sans-serif';ctx.textAlign='center';n.l.split('\n').forEach(function(ln,li){ctx.fillText(ln,posW[i].x,posW[i].y+r+(isH?4:0)+4+li*10+8);});ctx.globalAlpha=1;});}
+        var cvW=document.getElementById('netCanvasWeb');
+        cvW.height=480;
+        initW(cvW.offsetWidth||640,480);
+        function loopW(){if(cvW.width!==cvW.offsetWidth){cvW.width=cvW.offsetWidth;initW(cvW.width,480);}simW(cvW.width,480);drawW(cvW);requestAnimationFrame(loopW);}
+        loopW();
+        window.netFilterWeb=function(t,btn){cfW=t;document.querySelectorAll('#netCanvasWeb').forEach(function(){});var ids={all:'nfw-all','EV/AV':'nfw-ev','Digital':'nfw-dig','Innovation':'nfw-inn','Energy':'nfw-en','Entrepreneurship':'nfw-ent','Intl':'nfw-int'};Object.entries(ids).forEach(function(kv){var el=document.getElementById(kv[1]);if(!el)return;var on=kv[0]===t;el.style.background=on?'var(--accent-light)':'none';el.style.color=on?'var(--accent)':'var(--ink-mid)';el.style.borderColor=on?'var(--accent)':'var(--ink-faint)';});};
+        cvW.addEventListener('mousemove',function(e){var rect=cvW.getBoundingClientRect(),sx=cvW.width/rect.width,mx=(e.clientX-rect.left)*sx,my=(e.clientY-rect.top)*sx;if(dragW!==null){posW[dragW].x=Math.max(26,Math.min(cvW.width-26,mx));posW[dragW].y=Math.max(26,Math.min(480-26,my));posW[dragW].vx=0;posW[dragW].vy=0;return;}var v=visW(),found=null;NW.forEach(function(n,i){if(!v.has(i))return;var r=RW(n,i),dx=posW[i].x-mx,dy=posW[i].y-my;if(dx*dx+dy*dy<=(r+6)*(r+6))found=i;});hovW=found;var box=document.getElementById('netInfoWeb');if(found!==null){var n=NW[found];var tags=n.top.map(function(t){return'<span style="background:'+( TCW[t]||'#888')+'22;color:'+(TCW[t]||'#888')+';padding:1px 6px;border-radius:6px;font-size:10px;margin-right:2px;">'+t+'</span>';}).join('');box.innerHTML='<strong style="color:var(--ink);">'+n.l.replace('\n',' ')+'</strong> &nbsp;'+tags+'<br>'+(n.inst?n.inst+' &nbsp;·&nbsp; ':'')+'<em>'+n.note+'</em> &nbsp;·&nbsp; '+n.p+' paper'+(n.p>1?'s':'');}else{box.innerHTML='Hover over a node to see collaboration details';}});
+        cvW.addEventListener('mousedown',function(e){var rect=cvW.getBoundingClientRect(),sx=cvW.width/rect.width,mx=(e.clientX-rect.left)*sx,my=(e.clientY-rect.top)*sx;var v=visW();NW.forEach(function(n,i){if(!v.has(i))return;var r=RW(n,i),dx=posW[i].x-mx,dy=posW[i].y-my;if(dx*dx+dy*dy<=(r+6)*(r+6)){dragW=i;cvW.style.cursor='grabbing';}});});
+        cvW.addEventListener('mouseup',function(){dragW=null;cvW.style.cursor='grab';});
+        cvW.addEventListener('mouseleave',function(){hovW=null;dragW=null;});
+        })();
+        </script>
+      </div>
+
+      <div class="section">
         <div class="section-title">Open Call — PhD Opportunity</div>
         <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
           <a href="https://www.sbm.itb.ac.id/dd-green-catch-up-industrialisation-when-sustainability-niches-become-infant-industries-in-emerging-economies/" target="_blank" style="flex-shrink:0; display:block; border-radius:8px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.15); transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
