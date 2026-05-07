@@ -497,6 +497,25 @@ function closeModal(id) {
   m.classList.remove('open');
   document.body.style.overflow = '';
 }
+function pubFilter(btn) {
+  var filter = btn.dataset.filter;
+  document.querySelectorAll('.pub-filter').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  document.querySelectorAll('.pub-item').forEach(function(item) {
+    if (filter === 'all') {
+      item.classList.remove('hidden');
+    } else {
+      var tags = (item.dataset.tags || '').split(' ');
+      if (tags.indexOf(filter) >= 0) {
+        item.classList.remove('hidden');
+      } else {
+        item.classList.add('hidden');
+      }
+    }
+  });
+}
 </script>
 
 </head>
@@ -1015,7 +1034,44 @@ function closeModal(id) {
             </div>
           </div>
         </div>
-      </div>      
+      </div>
+      <!-- Media & Public Engagement -->
+      <div class="section">
+        <div class="section-title" id="media-engagement">Media &amp; Public Engagement</div>
+        <p style="font-size:13px; color:var(--ink-light); margin-bottom:20px; font-style:italic;">Selected contributions to public discourse on technology, innovation, and sustainability — through the <strong style="color:var(--ink); font-style:normal;">Management of Technology Laboratory</strong> podcast at SBM-ITB, which explores technologies developed at ITB and their commercialisation and societal impact.</p>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:20px;">
+
+          <!-- Video 1 -->
+          <div style="border:1px solid var(--ink-faint); border-radius:10px; overflow:hidden; background:var(--paper);">
+            <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
+              <iframe
+                src="https://www.youtube.com/embed/v-wXBtAhzh0?start=2175"
+                title="Management of Technology Laboratory Podcast - SBM-ITB"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                style="position:absolute; top:0; left:0; width:100%; height:100%;">
+              </iframe>
+            </div>
+            <div style="padding:14px 16px;">
+              <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
+                <span style="font-size:10px; background:var(--accent-light); color:var(--accent); padding:2px 8px; border-radius:8px; font-weight:500;">MoT Lab Podcast</span>
+                <span style="font-size:10px; background:var(--paper-warm); color:var(--ink-light); padding:2px 8px; border-radius:8px; border:0.5px solid var(--ink-faint);">SBM-ITB</span>
+              </div>
+              <div style="font-size:13px; font-weight:500; color:var(--ink); line-height:1.5; margin-bottom:5px;">Management of Technology Laboratory Podcast</div>
+              <div style="font-size:11px; color:var(--ink-light);">Discussion on technology development at ITB and its pathways to commercialisation and societal impact.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:16px; padding:12px 16px; background:var(--paper-warm); border-radius:8px; border:0.5px solid var(--ink-faint);">
+          <div style="font-size:12px; color:var(--ink-light);">More episodes and public contributions will be added here. The Management of Technology Laboratory is part of SBM-ITB's research and knowledge transfer ecosystem.</div>
+        </div>
+      </div>
+
+      
       
 
 
