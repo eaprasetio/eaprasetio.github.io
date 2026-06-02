@@ -864,6 +864,7 @@ function pubFilter(btn) {
         </div>
         <div id="pub-count" style="font-size:12px; color:var(--ink-light); margin-bottom:12px; font-style:italic;">Showing all 23 publications</div>
         <div class="pub-list" id="pub-list">
+          <div class="pub pub-item" data-tags="q1 digital 2025+" onclick="openModal('modal-findistress')" style="cursor:pointer;"><div class="pub-title">Is financial distress recurring? Predicting multiclass distress and recovery dynamics using machine learning</div><div class="pub-meta"><em>Cogent Business &amp; Management</em>, 13 &nbsp;·&nbsp; Nengah Rama Gautama, Pri Hermawan, Eko Agus Prasetio</div><div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2026</span></div></div>
           <div class="pub pub-item" data-tags="innovation 2025+" onclick="openModal('modal-orgresilience')" style="cursor:pointer;"><div class="pub-title">The exploration of organizational resilience strategy through integrating dynamic capabilities theory and the resource-based view: Insights from engineering consulting companies in Indonesia</div><div class="pub-meta"><em>Journal of Strategy &amp; Innovation</em>, Elsevier &nbsp;·&nbsp; Novia Hafnidah, Aurik Gustomo, Eko Agus Prasetio, Abdurrahman Abdurrahman</div><div class="pub-badges"><span class="badge badge-scopus">Scopus</span><span class="badge badge-year">2026</span></div></div>
           <div class="pub pub-item" data-tags="q1 2025+" onclick="openModal('modal-leadership')" style="cursor:pointer;"><div class="pub-title">Leadership succession and its impact on organizational resilience: A contingency perspective in engineering firms</div><div class="pub-meta"><em>Project Leadership and Society</em>, 100192 &nbsp;·&nbsp; Novia Hafnidah, Aurik Gustomo, Eko Agus Prasetio, Abdurrahman Abdurrahman</div><div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2025</span></div></div>
           <div class="pub pub-item" data-tags="q1 digital 2025+" onclick="openModal('modal-microgrid')" style="cursor:pointer;"><div class="pub-title">Stakeholder perspectives on microgrid interoperability in energy access</div><div class="pub-meta"><em>IEEE Access</em> &nbsp;·&nbsp; Amalia Suryani, Eko Agus Prasetio, Niek Moonen, Jelena Popovic</div><div class="pub-badges"><span class="badge badge-q1">Scopus Q1</span><span class="badge badge-year">2025</span></div></div>
@@ -2653,6 +2654,58 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="modal-footer-bar">
               <div style="font-size:11px; color:var(--ink-light);">DOI: 10.1080/14778238.2024.2379923</div>
               <a href="https://doi.org/10.1080/14778238.2024.2379923" target="_blank" class="modal-cta">View Paper →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: modal-findistress -->
+      <div id="modal-findistress" class="paper-modal" onclick="if(event.target===this)closeModal('modal-findistress')">
+        <div class="modal-box">
+          <div class="modal-header" style="background:linear-gradient(135deg,#1e3a5f,#2a5298);">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+              <div>
+                <div style="font-size:11px; color:rgba(255,255,255,0.6); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;">Cogent Business &amp; Management · Taylor &amp; Francis · 2026</div>
+                <h2 style="font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:#fff; line-height:1.4; margin-bottom:8px;">Is Financial Distress Recurring? Predicting Multiclass Distress and Recovery Dynamics Using Machine Learning</h2>
+                <div style="font-size:12px; color:rgba(255,255,255,0.7);">Nengah Rama Gautama · Pri Hermawan · Eko Agus Prasetio</div>
+              </div>
+              <button onclick="closeModal('modal-findistress')" class="modal-close">✕</button>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;">
+              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">Financial Distress</span>
+              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">Machine Learning</span>
+              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">Recovery Dynamics</span>
+              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">State Transition</span>
+              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">Indonesian Listed Firms</span>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="modal-intro">Traditional financial distress research treats distress as a static, binary outcome — either distressed or not. This study redefines it as a recurring, state-transitional process, examining how Indonesian listed firms repeatedly move into and out of distressed financial states rather than achieving stable recovery after a single episode.</div>
+            <div class="modal-grid">
+              <div class="modal-card">
+                <div class="modal-card-icon">🔬</div>
+                <div class="modal-card-title">Method</div>
+                <p>Longitudinal data from publicly listed Indonesian firms. Machine learning techniques applied to develop a multiclass framework capturing firm transitions across varying financial conditions over time.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">🔄</div>
+                <div class="modal-card-title">Key Finding</div>
+                <p>Recurring distress — characterized by fragile, unstable recovery — is the hardest state to identify due to ambiguity in transitional financial conditions. Recovery trajectories are heterogeneous: rapid recoveries are more distinct than slow, complex adjustment paths.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">📊</div>
+                <div class="modal-card-title">Influencing Factors</div>
+                <p>Firm characteristics, financial conditions, and strategic responses collectively shape recovery dynamics. Restructuring efforts are frequently associated with improved recovery prospects; high leverage often constrains recovery.</p>
+              </div>
+              <div class="modal-card">
+                <div class="modal-card-icon">💡</div>
+                <div class="modal-card-title">Contribution</div>
+                <p>Introduces a dynamic, process-oriented perspective on financial distress — shifting from binary prediction to multiclass state-transition modelling shaped by the continuous interaction between firm-level conditions and strategic adaptation.</p>
+              </div>
+            </div>
+            <div class="modal-footer-bar">
+              <div style="font-size:11px; color:var(--ink-light);">DOI: 10.1080/23311975.2026.2678009</div>
+              <a href="https://doi.org/10.1080/23311975.2026.2678009" target="_blank" class="modal-cta">View Paper →</a>
             </div>
           </div>
         </div>
