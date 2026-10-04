@@ -789,7 +789,7 @@ function pubFilter(btn) {
 
       <div class="section">
         <div class="section-title">Doctoral Supervision</div>
-        <p style="font-size:13px; color:var(--ink-light); margin-bottom:16px; font-style:italic;">Main Promotor: 4 doctoral students · Co-supervisor: 13 doctoral students across SBM-ITB and partner institutions. Click a card to view full details.</p>
+        <p style="font-size:13px; color:var(--ink-light); margin-bottom:16px; font-style:italic;">Main Promotor: 3 doctoral students · Co-supervisor: 13 doctoral students across SBM-ITB and partner institutions. Click a card to view full details.</p>
 
         <div style="display:flex; flex-direction:column; gap:14px;">
 
@@ -801,7 +801,7 @@ function pubFilter(btn) {
                 <div style="flex-shrink:0; width:48px; height:48px; background:#fef3c7; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:22px;">🎓</div>
                 <div style="flex:1; min-width:0;">
                   <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-                    <span style="font-size:10px; background:#fef3c7; color:#92400e; font-weight:500; padding:2px 8px; border-radius:8px; border:1px solid #fcd34d;">4 Ongoing</span>
+                    <span style="font-size:10px; background:#fef3c7; color:#92400e; font-weight:500; padding:2px 8px; border-radius:8px; border:1px solid #fcd34d;">3 Ongoing</span>
                     <span style="font-size:10px; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:8px;">Main Promotor</span>
                     <span style="font-size:10px; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:8px;">SBM-ITB · 2026</span>
                   </div>
@@ -815,11 +815,7 @@ function pubFilter(btn) {
                   <div class="phd-topic">Carbon Market Architecture &amp; CCS Governance in Emerging Economies</div>
                   <div class="phd-meta">Sustainability · SBM-ITB · 2026</div>
                 </div>
-                <div class="phd-row phd-ongoing" style="cursor:pointer;" onclick="openModal('modal-proposal-lazuardi')" onmouseover="this.style.background='#fef3c7'" onmouseout="this.style.background=''">
-                  <div class="phd-name" style="color:#92400e;">Lazuardi Imani Hakam <span style="font-size:10px; font-weight:400; color:#b45309;">→ view proposal</span></div>
-                  <div class="phd-topic">Agentic AI Adoption in Financial Credit Decisioning · Indonesian Banking</div>
-                  <div class="phd-meta">ETM · SBM-ITB · 2026</div>
-                </div>
+
                 <div class="phd-row phd-ongoing" style="cursor:pointer;" onclick="openModal('modal-proposal-iqbal')" onmouseover="this.style.background='#fef3c7'" onmouseout="this.style.background=''">
                   <div class="phd-name" style="color:#92400e;">Muhammad Iqbal Baihaqi <span style="font-size:10px; font-weight:400; color:#b45309;">→ view proposal</span></div>
                   <div class="phd-topic">AI Adoption &amp; Entrepreneurial Resilience in Rural Tourism SMEs · West Java</div>
@@ -2797,54 +2793,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="modal-card-icon">📋</div>
                 <div class="modal-card-title">Regulatory Context</div>
                 <p>Presidential Regulation No. 110/2025 on Carbon Economic Value · Presidential Regulation No. 14/2024 on CCS · MEMR Regulations No. 2/2023 and No. 16/2024 · Indonesia ETS evolving alongside CCS hub ambitions · Article 6 cross-border governance</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MODAL: modal-proposal-lazuardi -->
-      <div id="modal-proposal-lazuardi" class="paper-modal" onclick="if(event.target===this)closeModal('modal-proposal-lazuardi')">
-        <div class="modal-box">
-          <div class="modal-header" style="background:linear-gradient(135deg,#78350f,#d97706);">
-            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
-              <div>
-                <div style="font-size:11px; color:rgba(255,255,255,0.6); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;">Research Proposal · Main Promotor · SBM-ITB · 2026</div>
-                <h2 style="font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:600; color:#fff; line-height:1.4; margin-bottom:6px;">A Model of Agentic AI Characteristics and Adoption Intention in Financial Credit Decisioning: Evidence from Indonesian Banking Professionals</h2>
-                <div style="font-size:12px; color:rgba(255,255,255,0.75);">Lazuardi Imani Hakam · ETM Stream · DSM</div>
-              </div>
-              <button onclick="closeModal('modal-proposal-lazuardi')" class="modal-close">✕</button>
-            </div>
-            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;">
-              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">Agentic AI</span>
-              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">Credit Decisioning</span>
-              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">Algorithm Aversion</span>
-              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">TAM · PLS-SEM</span>
-              <span style="font-size:11px; background:rgba(255,255,255,0.15); color:#fff; padding:3px 10px; border-radius:10px;">Indonesian Banking</span>
-            </div>
-          </div>
-          <div class="modal-body">
-            <div class="modal-intro">Since OJK's April 2025 AI governance guidelines, agentic AI is an organisational reality in Indonesian banking. Yet how banking professionals evaluate, trust, and adopt these systems for high-stakes credit decisioning remains empirically unexamined. This study proposes and tests a dual-mechanism mediation model extending Algorithm Aversion-Appreciation Theory and TAM.</div>
-            <div class="modal-grid">
-              <div class="modal-card">
-                <div class="modal-card-icon">🔬</div>
-                <div class="modal-card-title">Method</div>
-                <p>Quantitative cross-sectional survey of banking professionals (credit analysts, risk officers, relationship managers) · Min. 200 valid responses · PLS-SEM via SmartPLS · Bootstrapping (5,000 resamples) for mediation testing</p>
-              </div>
-              <div class="modal-card">
-                <div class="modal-card-icon">📐</div>
-                <div class="modal-card-title">Conceptual Model</div>
-                <p>Agentic AI Autonomy → Perceived Risk → Trust (aversion pathway) · AI Transparency → Trust (appreciation pathway) · Agentic AI Autonomy → Perceived Usefulness (functional pathway) · Both pathways converge on Adoption Intention</p>
-              </div>
-              <div class="modal-card">
-                <div class="modal-card-icon">💡</div>
-                <div class="modal-card-title">Novelty (Threefold)</div>
-                <p>Extends Algorithm Aversion-Appreciation Theory to multi-step autonomous AI · Introduces AI autonomy &amp; transparency as distinct antecedents · Tests dual-mechanism mediation (risk-trust path + usefulness path) in high-stakes professional financial context</p>
-              </div>
-              <div class="modal-card">
-                <div class="modal-card-icon">📋</div>
-                <div class="modal-card-title">Regulatory Context</div>
-                <p>OJK April 2025 AI governance guideline (accountability, oversight, reliability) · POJK 3/2024 — 47 ITSK providers registered; 10 alternative credit scoring, 16 data aggregation · 84% of Indonesian fintech firms adopted AI (AFTECH 2026)</p>
               </div>
             </div>
           </div>
